@@ -72,7 +72,6 @@ async function addEmployee(first_name, last_name, role_id) {
 };
 
 async function updateEmployee(id, role_id) {
-  
     const sql = `UPDATE employee SET role_id = ?
     WHERE id =?`
     const params = [role_id,id]
@@ -82,6 +81,15 @@ async function updateEmployee(id, role_id) {
     return console.log("success");
 };
 
-module.exports = {db, getEmployees, getDepartment, getRoles, addRole, addDepartment, addEmployee, updateEmployee};
+async function deleteEmployee (answer) {
+    const sql = `DELETE FROM employee WHERE id = ?`
+    const params = [answer.first]
+
+    const result = await (await db).execute(sql, params);
+    return console.log("success");
+}
+
+
+module.exports = {db, getEmployees, getDepartment, getRoles, addRole, addDepartment, addEmployee, updateEmployee, deleteEmployee};
 
 //CONCAT(manager.first_name, " ", manager.id.last_name) 

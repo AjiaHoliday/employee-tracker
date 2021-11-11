@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
-const { menu, newRoles, newDept, newEmployeeQuestions } = require('./lib/questions');
-const {db, getEmployees, getDepartment, getRoles, addRole, addDepartment, addEmployee, updateEmployee} = require('./db/index');
+const { menu, newRoles, newDept, newEmployeeQuestions, removeEmployeePrompt } = require('./lib/questions');
+const {db, getEmployees, getDepartment, getRoles, addRole, addDepartment, addEmployee, updateEmployee, deleteEmployee} = require('./db/index');
+const { table } = require('console');
 require('console.table');
 
 function mainMenu() {
@@ -41,6 +42,10 @@ function mainMenu() {
                 return newEmployee();
             case "Update Employee Role":
                 return updateRole();
+            case "Delete an employee":
+                return remove();
+            case "EXIT":
+                return process.exit();
         };
     });
 };
@@ -158,7 +163,29 @@ function selectEmployeeQuestion(employee) {
         name: "id",
         message: "Select Employee",
         choices: options
-    }
-}
+    };
+};
+
+async function remove() {
+    let prompt = removeEmployeePrompt;
+    getEmployees().then((employees) => {
+        console.table(employees);
+        return inquirer.prompt(removeEmployeePrompt);
+    }).then((answers) => {
+        const id = answers;
+        deleteEmployee(id).then((result) => {
+            console.log('Employee has been deleted successfully');
+            return mainMenu();
+        });
+    //     db.delete('DELETE FROM employee WHERE ?',
+    //     {
+    //         id: answers.first
+    //     },
+    //     function (err) {
+    //         if(err) throw err;
+    //     }
+    // )
+    });
+};
 
 mainMenu();
