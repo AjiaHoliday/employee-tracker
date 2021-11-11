@@ -1,7 +1,6 @@
 const mysql = require('mysql2/promise');
 
-const db = mysql.createPool(
-    {
+const connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: 'Hufflepuff0404!',
@@ -9,9 +8,8 @@ const db = mysql.createPool(
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0
-    },
-
-    console.log('Connected to your employee tracker!')
+},
+console.log('Connected to your employee tracker!')
 );
 
-module.exports= db;
+module.exports= connection;

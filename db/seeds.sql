@@ -1,4 +1,4 @@
-INSERT INTO departments (dept_name)
+INSERT INTO department (name)
 VALUES
     ('Sales'),
     ('Engineering'),
@@ -15,13 +15,15 @@ VALUES
     ('Legal Team Lead', 250000, 4),
     ('Lawyer', 190000, 4);
 
-INSERT INTO employees (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
     ('John', 'Doe', 1, 3),
-    ('Mike', 'Chan',2,1),
-    ('Ashley','Rodriguez',3,null),
-    ('Kevin','Tupik',3,3),
-    ('Malia','Brown',5,null),
-    ('Sarah','Lourd',6,null),
+    ('Mike', 'Chan',2, 1),
+    ('Ashley','Rodriguez',3, null),
+    ('Kevin','Tupik',3, 3),
+    ('Malia','Brown',5, null),
+    ('Sarah','Lourd',6, null),
     ('Tom','Allen', 7, 6),
-    ('Christian','Ecclstein',4,3);
+    ('Christian','Ecclstein',4, 3);
+
+ALTER TABLE employee ADD CONSTRAINT employee_manager FOREIGN KEY (manager_id) REFERENCES employee(id);
